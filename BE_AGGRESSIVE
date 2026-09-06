@@ -2,10 +2,10 @@
 set -e
 
 # 1. Collect GPU device strings!
-GPU_FLAGS=""
-[ -e /dev/dri ] && GPU_FLAGS+="--device /dev/dri "
-[ -e /dev/kfd ] && GPU_FLAGS+="--device /dev/kfd "
-[ -d /etc/cdi ] && GPU_FLAGS+="--device ://nvidia.com "
+GPU_FLAGS=()
+[ -e /dev/dri ] && GPU_FLAGS+=("--device" "/dev/dri")
+[ -e /dev/kfd ] && GPU_FLAGS+=("--device" "/dev/kfd")
+[ -d /etc/cdi ] && GPU_FLAGS+=("--device" "nvidia.com/gpu=all")
 
 # 2. Launch container!
 podman run -it \
@@ -13,7 +13,7 @@ podman run -it \
   --replace \
   --privileged \
   --security-opt label=disable \
+  "${GPU_FLAGS[@]}" \
   $GPU_FLAGS \
   -v aggro_workspace:/home/aggro \
   ghcr.io/celestial-uprising/aggrollama:latest /bin/bash
-
