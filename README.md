@@ -8,15 +8,15 @@ The Llama you love; built with aggression rarely seen in polite society, and but
 
 ## Quick start
 
-- 1) clone the repo and pull the container image
+ 1)     clone the repo and pull the container image
 
-- 2) run ./BE_AGGRESSIVE to run/enter the container 
+ 2)     run ./BE_AGGRESSIVE to run/enter the container 
 
-- 3) fresh clone of this repo will be located in $HOME of the container's USER aggro
+ 3)     fresh clone of this repo will be located in $HOME of the container's USER aggro
 
-- 4) fresh clone of upstream llama.cpp repo will be located within aggrollama dir inside of container
+ 4)     fresh clone of upstream llama.cpp repo will be located within aggrollama dir inside of container
 
-- 5) run script for selected backend/lto config; completed binaries will be located in $HOME/aggrollama/llama.cpp/build/bin
+ 5)     run script for selected backend/lto config; completed binaries will be located in $HOME/aggrollama/llama.cpp/build/bin
 
 </div>
 
