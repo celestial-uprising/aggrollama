@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+echo "===  {START}: Building ZenDNN [Built from source!]  ==="
+
+set -e
+
+cd $HOME/.src/ZenDNN
+
+git reset --hard
+git fetch --all
+git fetch --tags --all
+git pull
+
+rm -rf build
+mkdir build
+cd build
+
+cmake ..
+cmake --build . --target all -j$(nproc)
+
+
+echo "===  {END}: ZenDNN:latest Build Completed!  ==="

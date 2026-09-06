@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+echo "===  {START}: Building AggroLlama-Z3 [ZenDNN + ROCm, NO-LTO Optimization Pass]  ==="
+
+set -e
+
+source /opt/AMD/aocc-compiler-*/setenv_AOCC.sh
+AOCC="/opt/AMD/aocc-compiler-5.2.0/bin"
+
+export AGGRO="-march=native -mtune=znver3 -Ofast -funroll-loops -ftree-vectorize -mprefer-vector-width=256 -ffast-math -fomit-frame-pointer -fstrict-aliasing -mllvm -align-all-nofallthru-blocks=5 -fno-finite-math-only -Wno-pass-failed"
+export OMP_PROC_BIND=TRUE
+export HIP_DEVICE_LIB_PATH="/usr/lib/llvm-17/lib/clang/17/amdgcn/bitcode"
+
+export ROCM_PATH="/usr"
+export HIP_PATH="/usr"
+
+cd "$HOME/.src/llama.cpp"
+rm -rf build
+
+git fetch --all
+git fetch --tags --all
+git reset --hard 
+git pull
+
+# 1. Bypass native Ubuntu ROCm version mismatches safely
+sed -i '/if (${hip_VERSION} VERSION_LESS 6.1)/,/endif()/d' ggml/src/ggml-hip/CMakeLists.txt
+
+# 2. FIX HARDCODED LLVM INLINING IN CMAKE (Turns true -> false to prevent compiler lock)
+sed -i 's/amdgpu-early-inline-all=true/amdgpu-early-inline-all=false/g' ggml/src/ggml-hip/CMakeLists.txt
+
+# 3. FIX API SIGNATURE MISMATCH (Wraps the macro to safely append the missing 3rd argument flag)
+sed -i 's/#define cudaStreamWaitEvent hipStreamWaitEvent/#define cudaStreamWaitEvent(stream, event, ...) hipStreamWaitEvent(stream, event, 0)/g' ggml/src/ggml-cuda/vendors/hip.h
+
+# 4. FIX hipblasStrsmBatched POINTER STRICTNESS TYPE BUG
+sed -i 's/#define cublasStrsmBatched hipblasStrsmBatched/#define cublasStrsmBatched(handle, side, uplo, transA, diag, m, n, alpha, A, lda, B, ldb, count) hipblasStrsmBatched(handle, side, uplo, transA, diag, m, n, alpha, (float* const*)(A), lda, (float**)(B), ldb, count)/g' ggml/src/ggml-cuda/vendors/hip.h
+
+# 5. BULLETPROOF LINKER INJECTION: Append directly to the bottom of the HIP configuration file
+echo "target_link_options(ggml-hip PRIVATE -Wl,--allow-multiple-definition)" >> ggml/src/ggml-hip/CMakeLists.txt
+
+# 6. AUTOMATED FBGEMM HEADER FIX FOR ZENDNN SUBMODULE INTEGRATION
+mkdir -p /home/shepherd/.src/ZenDNN/build/install/zendnnl/include/fbgemm
+cp -r /home/shepherd/.src/ZenDNN/build/install/deps/fbgemm/include/fbgemm/* /home/shepherd/.src/ZenDNN/build/install/zendnnl/include/fbgemm/
+
+cmake -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_C_COMPILER="${AOCC}/clang" \
+    -DCMAKE_CXX_COMPILER="${AOCC}/clang++" \
+    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+    -DGGML_NATIVE=ON \
+    -DCMAKE_EXE_LINKER_FLAGS="-s -lmimalloc" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-s -lmimalloc" \
+    -DCMAKE_MODULE_LINKER_FLAGS="-s -lmimalloc" \
+    -DGGML_MIMALLOC=ON \
+    -DCMAKE_INSTALL_RPATH="\$ORIGIN" \
+    -DGGML_BACKEND_DL=OFF \
+    -DGGML_VULKAN=ON \
+    -DGGML_HIP=ON \
+    -DCMAKE_HIP_COMPILER="${AOCC}/clang++" \
+    -DCMAKE_HIP_ROCM_ROOT=/usr \
+    -Dhip-lang_DIR="/usr/lib/x86_64-linux-gnu/cmake/hip-lang" \
+    -Dhip_DIR="/usr/lib/x86_64-linux-gnu/cmake/hip" \
+    -DCMAKE_HIP_FLAGS="--rocm-path=/usr --rocm-device-lib-path=${HIP_DEVICE_LIB_PATH}" \
+    -DGPU_TARGETS="gfx900;gfx90c" \
+    -DAMDGPU_TARGETS="gfx900;gfx90c" \
+    -DGGML_HIP_GRAPHS=ON \
+    -DGGML_ZENDNN=ON \
+    -DZENDNN_ROOT="/home/shepherd/.src/ZenDNN/build/install"
+
+ninja -C build
+
+echo "===  {END}: AggroLlama-Z3 Build Completed!  ==="
+
