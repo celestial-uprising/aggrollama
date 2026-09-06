@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "===  {START}: Building AggroLlama-Z3 [Pure Vulkan + Aggressive LTO!]  ==="
+echo "===  {START}: Building AggroLlama-Z3:Vulkan+Aggro+LTO  ==="
 
 set -e
 
@@ -10,7 +10,7 @@ AOCC="/opt/AMD/aocc-compiler-5.2.0/bin"
 export AGGRO="-march=native -mtune=znver3 -Ofast -flto=auto -ffat-lto-objects -funroll-loops -ftree-vectorize -mprefer-vector-width=256 -ffast-math -fomit-frame-pointer -fstrict-aliasing -mllvm -align-all-nofallthru-blocks=5 -fno-finite-math-only -Wno-pass-failed"
 export OMP_PROC_BIND=TRUE
 
-cd "$HOME/.src/llama.cpp"
+cd "$HOME/aggrollama/llama.cpp"
 rm -rf build
 
 git fetch --all
@@ -37,5 +37,5 @@ cmake -B build -G Ninja \
 
 ninja -C build
 
-echo "===  {END}: AggroLlama-Z3 Pure Vulkan Build Completed!  ==="
+echo "===  {END}: AggroLlama-Z3 Vulkan LTO Build Completed!  ==="
 
