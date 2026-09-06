@@ -1,0 +1,28 @@
+# USEFUL ENV_VAR RELATED TO THIS PROJECT #
+[for everyone, by lesbidoodles] {in association with Wiccan Bunny Propaganda International}
+
+### FOR THE BUILD PROCESS ITSELF ###
+
+export LD_LIBRARY_PATH="/opt/AMD/aocc-compiler-5.2.0/lib:$LD_LIBRARY_PATH"
+
+source /opt/AMD/aocc-compiler-*/setenv_AOCC.sh
+
+AOCC="/opt/AMD/aocc-compiler-5.2.0/bin"
+
+export AGGRO="-march=native -mtune=znver3 -Ofast -funroll-loops -ftree-vectorize -mprefer-vector-width=256 -ffast-math -fomit-frame-pointer -fstrict-aliasing -mllvm -align-all-nofallthru-blocks=5 -fno-finite-math-only -Wno-pass-failed"
+
+export OMP_PROC_BIND=TRUE
+
+
+### FOR RUNNING THE ACTUALLY BINARIES ###
+
+export LD_LIBRARY_PATH="/opt/AMD/aocc-compiler-5.2.0/lib:$LD_LIBRARY_PATH"
+
+export OMP_PROC_BIND=TRUE
+
+export RADV_PERFTEST=nogttspill
+
+export RADV_DEBUG=nounify
+
+export AMD_DEBUG=nodcc
+

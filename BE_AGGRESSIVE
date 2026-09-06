@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+# 1. Collect GPU device strings!
+GPU_FLAGS=""
+[ -e /dev/dri ] && GPU_FLAGS+="--device /dev/dri "
+[ -e /dev/kfd ] && GPU_FLAGS+="--device /dev/kfd "
+[ -d /etc/cdi ] && GPU_FLAGS+="--device ://nvidia.com "
+
+# 2. Launch container!
+podman run -it \
+  --name aggrollama \
+  --replace \
+  --privileged \
+  --security-opt label=disable \
+  $GPU_FLAGS \
+  -v aggro_workspace:/home/aggro \
+  ghcr.io/celestial-uprising/aggrollama:dev-latest /bin/bash
+
