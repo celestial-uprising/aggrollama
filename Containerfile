@@ -1,4 +1,3 @@
-# Start from Ubuntu 24.04 LTS 
 FROM quay.io/toolbx/ubuntu-toolbox:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -21,6 +20,8 @@ RUN apt-get update && apt-get install -y \
     btop \
     nvtop \
     radeontop \
+    s-tui \
+    lm-sensors \
     libdrm-dev \
     librocm-smi-dev \
     libssl-dev \
@@ -35,16 +36,6 @@ RUN apt-get update && apt-get install -y \
     rustup \
     vim \
     tmux \
-    fzf \
-    fd-find \
-    ripgrep \
-    zoxide \
-    tree-sitter-cli \
-    eza \
-    bat \
-    neovim \
-    lazygit \
-    python3-pynvim \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y locales && \
     locale-gen en_US.UTF-8 && \
