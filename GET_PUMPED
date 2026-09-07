@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "   ---   {START} Building Aggrollama Development Container Image!   ---   "
+
+set -e
+
+podman build -t ghcr.io/celestial-uprising/aggrollama:dev .
+
+echo "   ---   {END} Aggrollama Development Container Image Built!   ---   "

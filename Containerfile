@@ -1,5 +1,5 @@
-# Start from Ubuntu 26.04 LTS (Resolute Raccoon)
-FROM ubuntu:26.04
+# Start from Ubuntu 24.04 LTS 
+FROM quay.io/toolbx/ubuntu-toolbox:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -43,7 +43,7 @@ RUN apt-get update && apt-get install -y \
     eza \
     bat \
     neovim \
-    lazygit \
+    lazyvim \
     python3-pynvim \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y locales && \
