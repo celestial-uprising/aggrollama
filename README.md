@@ -8,23 +8,21 @@ The Llama you love; built with aggression rarely seen in polite society, and but
 
 ## Quick start
 
- 1)     clone the repo and pull the container image
+ - clone the repo and pull the container image
+ -     git clone https://github.com/celestial-uprising/aggrollama.git
+ -     podman pull ghcr.io/celestial-uprising/aggrollama:latest
 
- 2)     run ./BE_AGGRESSIVE to run/enter the container 
-
- 3)     fresh clone of this repo will be located in $HOME of the container's USER aggro
-
- 4)     fresh clone of upstream llama.cpp repo will be located within aggrollama dir inside of container
-
- 5)     run script for selected backend/lto config; completed binaries will be located in $HOME/aggrollama/llama.cpp/build/bin
+ - create the container
+ -     distrobox create -n aggrollama -i ghcr.io/celestial-uprising/aggrollama:latest
+  *or use '--nvidia' and the 'latest-nv' tagged image if applicable*
+ -     distrobox create --nvidia -n aggrollama -i ghcr.io/celestial-uprising:latest-nv
 
 </div>
 
-## Compiler Optimizations
+## Backends and testing
 
-[AOCC - AMD Optimized C Compiler]:
-
-[Llama.cpp]:
+- *VULKAN* - Build passing (AMD AOCC Compiler / LTO / Mimalloc / $AGGRO Optimizations)
+- *CUDA*   - Build completed; testing upcoming (AOCC Compiler / LTO (except Cuda backend) / Mimalloc / $AGGRO Optimizations)
 
 ## Documentation
 
