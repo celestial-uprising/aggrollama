@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set your target directory here (defaults to current directory if empty)
+TARGET_DIR="${1:-.}"
+
+# Check if zstd is installed
+if ! command -v zstd &> /dev/null; then
+    echo "Error: zstd is not installed."
+    exit 1
+fi
+
+# Find all files, exclude those ending in .zst or .zstd, and compress at level 9
+find "$TARGET_DIR" -type f ! -name "*.zst" ! -name "*.zstd" -exec zstd -9 --rm {} +
+
+echo "Level 9 Compression Complete."

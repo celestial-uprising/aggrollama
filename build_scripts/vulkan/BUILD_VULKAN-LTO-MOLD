@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+echo "===  {START}: Building AggroLlama-Z3:Vulkan+Aggro+LTO+Mold  ==="
+
+set -e
+
+source /opt/AMD/aocc-compiler-*/setenv_AOCC.sh
+AOCC="/opt/AMD/aocc-compiler-5.2.0/bin"
+
+# -- EXTREME ZEN 3 + AOCC FLAGS --
+# 1. Changed -march=native to -march=znver3 explicitly to force the absolute correct ISA mapping.
+# 2. Replaced standard vectorization with -fvectorize and explicitly enabled AMD's vector-math library loop paths.
+# 3. Enhanced LTO with a dedicated -flto=thin for optimized whole-program memory grouping.
+# 4. Added aggressive loop transformations (-mllvm passes) that target Zen3's deep pipeline structures.
+export AGGRO="-march=znver3 -mtune=znver3 -Ofast -flto=thin -funroll-loops -fvectorize -mprefer-vector-width=256 -ffast-math -fomit-frame-pointer -fstrict-aliasing -fno-finite-math-only -Wno-pass-failed -mllvm -align-all-nofallthru-blocks=5 -mllvm -enable-loop-reversal -mllvm -enable-gather"
+export OMP_PROC_BIND=TRUE
+
+cd "$HOME/.src/llama.cpp"
+rm -rf build
+
+git fetch --all
+git fetch --tags --all
+git reset --hard
+git pull
+
+# -- MOLD INTEGRATION + LINKER STRATEGY --
+# 1. Added "-fuse-ld=mold" into the linker strings to bypass LLD or GNU ld completely.
+# 2. Passed LTO flags into the linker environment so it correctly parses the Clang IR byte-code.
+# 3. Enabled Interprocedural Optimization (IPO) at the CMake tier.
+LINKER_FLAGS="-fuse-ld=mold -s -lmimalloc -flto=thin -Wl,--allow-multiple-definition"
+
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER="${AOCC}/clang" \
+  -DCMAKE_CXX_COMPILER="${AOCC}/clang++" \
+  -DCMAKE_C_FLAGS="$AGGRO" \
+  -DCMAKE_CXX_FLAGS="$AGGRO" \
+  -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+  -DGGML_NATIVE=ON \
+  -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+  -DCMAKE_EXE_LINKER_FLAGS="$LINKER_FLAGS" \
+  -DCMAKE_SHARED_LINKER_FLAGS="$LINKER_FLAGS" \
+  -DCMAKE_MODULE_LINKER_FLAGS="$LINKER_FLAGS" \
+  -DGGML_MIMALLOC=ON \
+  -DCMAKE_INSTALL_RPATH="\$ORIGIN" \
+  -DGGML_BACKEND_DL=OFF \
+  -DGGML_VULKAN=ON
+
+ninja -C build
+
+echo "===  {END}: AggroLlama-Z3 Vulkan LTO + Mold Build Completed!  ==="

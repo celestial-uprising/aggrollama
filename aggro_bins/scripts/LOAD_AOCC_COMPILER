@@ -1,0 +1,17 @@
+#!/bin/bash
+source /opt/AMD/aocc-compiler-5.2.0/setenv_AOCC.sh
+export LLVM=1
+export LLVM_IAS=1
+export CC=clang
+export CXX=clang++
+export LD=ld.lld
+export AR=llvm-ar
+export NM=llvm-nm
+export OBJCOPY=llvm-objcopy
+export OBJDUMP=llvm-objdump
+export STRIP=llvm-strip
+export CFLAGS="-O3 -march=znver3 -mtune=znver3"
+export HOSTCFLAGS="-O3 -march=znver3 -mtune=znver3"
+export KCFLAGS="-O3 -march=znver3 -mtune=znver3"
+echo "✅ AOCC Zen 3 Build Environment Loaded Successfully!"
+

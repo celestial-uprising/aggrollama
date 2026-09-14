@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+START_DIR=$(pwd)
+
+set -euo pipefail
+
+# --- PATH & SOURCE INITIALIZATION ---
+# Inject your specific AOCC profile scripts here if they aren't globally inherited
+# source /opt/amd/aocc-compiler-current/setenv_aocc.sh
+
+REPO_FILE="/home/shepherd/.src/framework/modules/go/GO_REPOS.md"
+BUILD_DIR="/home/shepherd/.src/framework/modules/go/repos"
+OUTPUT_DIR="/home/shepherd/.src/framework/modules/go/bins"
+
+AOCC_FLAGS=(
+    "-Qunused-arguments"
+    "-march=native"
+    "-mtune=znver3"
+    "-Ofast"
+    "-flto=full"
+    "-funroll-loops"
+    "-ftree-vectorize"
+    "-mprefer-vector-width=256"
+    "-fstrict-aliasing"
+    "-fomit-frame-pointer"
+    "-fveclib=AMDLIBM"
+    "-zopt"
+    "-mllvm" "-unroll-threshold=2000"
+    "-mllvm" "-unroll-aggressive"
+    "-mllvm" "-inline-threshold=25000"
+    "-mllvm" "-inlinehint-threshold=50000"
+    "-mllvm" "-align-all-nofallthru-blocks=6"
+    "-mllvm" "-reduce-array-computations=3"
+    "-mllvm" "-enable-partial-inlining"
+)
+
+# Convert array directly into flat variables safely mapped for CGO parsing
+export CGO_ENABLED=1
+export CC="clang"
+export CXX="clang++"
+export CGO_CFLAGS="${AOCC_FLAGS[*]}"
+export CGO_CXXFLAGS="${AOCC_FLAGS[*]}"
+# Pass heavy LTO link execution commands down through the LLD interface
+export CGO_LDFLAGS="-Ofast -flto=full -fuse-ld=lld -lamdalloc-ext"
+
+mkdir -p "$OUTPUT_DIR"
+mkdir -p "$BUILD_DIR"
+
+if [[ ! -f "$REPO_FILE" ]]; then
+    echo "Error: Repo list file '$REPO_FILE' not found!" >&2
+    exit 1
+fi
+
+echo "=========================================================================="
+echo " RUNNING EXTREME AOCC OPTIMIZATION PIPELINE (SIZE & BUILD TIME IGNORED) "
+echo "=========================================================================="
+
+while IFS= read -r repo_url || [[ -n "$repo_url" ]]; do
+	cd "$START_DIR"
+    [[ -z "$repo_url" || "$repo_url" =~ ^# ]] && continue
+
+    repo_name=$(basename "$repo_url" .git)
+    echo -e "\n🔥 Compiling: $repo_name"
+
+    cd "$BUILD_DIR"
+    if [[ -d "$repo_name" ]]; then
+        cd "$repo_name"
+        git clean -fdx
+        # Fetch the default branch and safely target FETCH_HEAD directly
+        git fetch origin --quiet
+        git reset --hard FETCH_HEAD --quiet
+    else
+        git clone "$repo_url" "$repo_name" --quiet
+        cd "$repo_name"
+    fi
+
+    if [[ -f "go.mod" ]]; then
+        go mod tidy
+    fi
+
+    # -gcflags="-B" removes Go's boundary execution tracking
+    # -ldflags="-s -w" removes symbols, -extldflags pipes our LLVM commands to the final binary link
+    if go build -trimpath \
+        -gcflags="all=-B" \
+        -ldflags="-s -w -linkmode=external -extldflags '${AOCC_FLAGS[*]}'" \
+        -o "$OUTPUT_DIR/$repo_name" .; then
+        echo "✅ Extreme build success: $OUTPUT_DIR/$repo_name"
+    else
+        echo "❌ Build crash encountered on: $repo_name" >&2
+    fi
+
+done < "$REPO_FILE"
+
