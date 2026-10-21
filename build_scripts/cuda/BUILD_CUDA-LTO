@@ -1,25 +1,18 @@
 #!/usr/bin/env bash
 
-echo "===  {START}: Building AggroLlama-Z3 [CUDA + Aggressive LTO!]  ==="
+echo "===  {START}  ==="
 
 set -e
 
-source /opt/AMD/aocc-compiler-*/setenv_AOCC.sh
-AOCC="/opt/AMD/aocc-compiler-5.2.0/bin"
-
 export AOCCFLAGS="-mprefer-vector-width=256 -fomit-frame-pointer -fstrict-aliasing -mllvm -align-all-nofallthru-blocks=5 -Wno-pass-failed"
-
 export LTOFLAGS="-flto=auto -ffat-lto-objects"
-
 export BASEFLAGS="-march=native -mtune=znver3 -O3 -funroll-loops -ftree-vectorize"
 
 export AGGRO="${AOCCFLAGS} ${LTOFLAGS} ${BASEFLAGS}"
-
 export AGGROCUDA="${BASEFLAGS}"
-
 export OMP_PROC_BIND=TRUE
 
-cd "$HOME/.src/llama.cpp"
+cd "$HOME/src/llama-cuda"
 rm -rf build
 
 git fetch --all
@@ -54,4 +47,4 @@ cmake -B build -G Ninja \
 
 ninja -C build
 
-echo "===  {END}: AggroLlama-Z3 CUDA Build Completed!  ==="
+echo "===  {END}  ==="

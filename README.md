@@ -21,10 +21,15 @@ The Llama you love; built with aggression rarely seen in polite society, and but
 
 ## Backends and testing
 
-- *VULKAN* - Build passing (AMD AOCC Compiler / LTO / Mimalloc / $AGGRO Optimizations)
-- *CUDA*   - Build completed; testing upcoming (AOCC Compiler / LTO (except Cuda backend) / Mimalloc / $AGGRO Optimizations)
+- *VULKAN* - Build + Testing: **PASSING** -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
+- *CUDA* - Build + Testing: **PASSING** -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
 
-## Documentation
+- *ROCm* - Build: **PASSING** + Testing: **FAILING** -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
+
+- *ZenDNN* - Build: **FAILING** + Testing: *N/A* -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
+  - *To be built against: CUDA, Vulkan, ROCm, & CPU*
+
+## Documentation & Information
 
 #### Tools
 
@@ -38,9 +43,9 @@ All identical to the original. (Just with a bit more spice!)
 
 It is greatly preferred; out of unabashed preservation of the emotional and spiritual faculties of my last remaining brain cell:  PR's (of actual benefit to Llama.cpp itself) go to the original project; Please and thank you!
 
-Do not, under any circumstances, bring issues with the containers, binaries, or build scripts in this repo to the original repo; as they are not (to my knowledge) considered relevant as they have been built in a non-standard, (i can only assume, unsupported) manner.
+Do not, **under any circumstances**, bring issues with the *build scripts* in this repo to the original Llama.cpp repo; as they are not (to my knowledge) considered relevant as they have been built in a non-standard, (i can only assume, unsupported) manner.
 
-Do feel free to issue PR's with this repo, if they are related to the (soon-to-be) released binaries, the build process itself, prebuilt container image,.. (anything with bits of cabbage left on it). I will do the best a rabbit can do to assist.
+Do feel free to issue PR's with this repo, if they are related to the build process itself, the related Brontiall and Bartledan Containerfiles,.. (really- anything with bits of cabbage left on it). I will do the best a rabbit can do to assist.
 
 ## Acknowledgements
 
