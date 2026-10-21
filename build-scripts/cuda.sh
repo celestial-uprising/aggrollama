@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-echo "===  {START}  ==="
+echo "===  {START} CUDA AggroLlama Build Script  ==="
 
 set -e
 
 export AGGRO="-march=znver3 -O3 -Ofast -flto=full -fno-semantic-interposition -falign-functions=32 -funroll-loops -ftree-vectorize -mprefer-vector-width=256 -fomit-frame-pointer -fstrict-aliasing -Wno-pass-failed"
 export OMP_PROC_BIND=TRUE
 
-cd "$HOME/src/llama-cuda"
+cd "$LLAMAREPO"
 rm -rf build
 
 git fetch --all
@@ -37,4 +37,4 @@ cmake -B build -G Ninja \
 
 ninja -C build
 
-echo "===  {END}  ==="
+echo "===  {END} CUDA AggroLlama Build Script  ==="

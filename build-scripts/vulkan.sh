@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-echo "===  {START} Vulkan  ==="
+echo "===  {START} Vulkan AggroLlama Build Script  ==="
 
 set -e
 
 export AGGRO="-march=native -mtune=znver3 -Ofast -funroll-loops -ftree-vectorize -mprefer-vector-width=256 -fomit-frame-pointer -fstrict-aliasing -stdlib=libc++ -fno-finite-math-only -Wno-pass-failed"
 export OMP_PROC_BIND=TRUE
 
-cd "$HOME/src/llama-vulkan/"
+cd "$LLAMAREPO"
 rm -rf build
 
 git fetch --all
@@ -34,4 +34,4 @@ cmake -B build -G Ninja \
 
 ninja -C build
 
-echo "===  {END} Vulkan  ==="
+echo "===  {END} Vulkan AggroLlama Build Script  ==="
