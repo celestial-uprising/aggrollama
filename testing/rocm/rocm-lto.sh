@@ -52,10 +52,8 @@ cmake -B build -G Ninja \
     -DGPU_TARGETS="gfx900;gfx90c" \
     -DAMDGPU_TARGETS="gfx900;gfx90c" \
     -DGGML_HIP_GRAPHS=ON \
-    -DGGML_VULKAN=ON \
-    -DGGML_ZENDNN=ON \
-    -DGGML_ZENDNN_BUILD=OFF \
-    -DCMAKE_JOB_POOLS="compile_job_pool=4"
+    -DGGML_VULKAN=OFF \
+    -DGGML_ZENDNN=OFF
 
 ninja -C build
 

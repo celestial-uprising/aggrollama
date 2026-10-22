@@ -1,35 +1,32 @@
-# AggroLlama
+### AggroLlama
 
-## Description
-
-The Llama you love; built with aggression rarely seen in polite society, and but often present in the dreams of closeted and authoritarian government officials.
+The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
 
 </div>
 
-## Quick start
+#### Backends & Optimizations
 
- - clone the repo and pull the container image
- -     git clone https://github.com/celestial-uprising/aggrollama.git
- -     podman pull ghcr.io/celestial-uprising/aggrollama:latest
+Build + Testing: **PASSING** 
 
- - create the container
- -     distrobox create -n aggrollama -i ghcr.io/celestial-uprising/aggrollama:latest
-  *or use '--nvidia' and the 'latest-nv' tagged image if applicable*
- -     distrobox create --nvidia -n aggrollama -i ghcr.io/celestial-uprising:latest-nv
+  - *VULKAN* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+
+  - *CUDA* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+
+Build: **PASSING** + Testing: **FAILING** 
+
+  - *ROCm* --- AOCC, Mimalloc, LTO, $AGGRO Optimizations (OpenMP to be added as soon as ROCm testing is resumed)
+
+Build: **FAILING** + Testing: *N/A* 
+
+  - *ZenDNN* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+       *To be built against: CUDA, Vulkan & ROCm*
+
+$AGGRO Optimizations: *-march=znver3 -O3 -Ofast -flto=full -zopt -fno-finite-math-only* 
+                      *-fno-semantic-interposition -falign-functions=32 -fvectorize*
+                      *-mprefer-vector-width=256 -fomit-frame-pointer -fstrict-aliasing*
+                      *-Wno-pass-failed -mllvm -enable-strided-vectorization*
 
 </div>
-
-## Backends and testing
-
-- *VULKAN* - Build + Testing: **PASSING** -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
-- *CUDA* - Build + Testing: **PASSING** -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
-
-- *ROCm* - Build: **PASSING** + Testing: **FAILING** -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
-
-- *ZenDNN* - Build: **FAILING** + Testing: *N/A* -- LLVM (AOCC *or* CLANG) + LTO + Mimalloc + $AGGRO Optimizations
-  - *To be built against: CUDA, Vulkan, ROCm, & CPU*
-
-## Documentation & Information
 
 #### Tools
 
@@ -37,9 +34,8 @@ All identical to the original. (Just with a bit more spice!)
 
 </div>
 
-#### Development
 
-## Contributing
+#### Contributing
 
 It is greatly preferred; out of unabashed preservation of the emotional and spiritual faculties of my last remaining brain cell:  PR's (of actual benefit to Llama.cpp itself) go to the original project; Please and thank you!
 
@@ -47,13 +43,8 @@ Do not, **under any circumstances**, bring issues with the *build scripts* in th
 
 Do feel free to issue PR's with this repo, if they are related to the build process itself, the related Brontiall and Bartledan Containerfiles,.. (really- anything with bits of cabbage left on it). I will do the best a rabbit can do to assist.
 
-## Acknowledgements
+### Acknowledgements
 
-See the original repo for alternative build instructions: [Original Llama.cpp Repo]{<https://github.com/ggml-org/llama.cpp}>
+To my wife: the love of my life- my savior and queen; who has provided all the carrots, hay, and cabbage a bunny could fit in her shnozz.
 
-- [ggml-org/llama.cpp]{<https://github.com/ggml-org/llama.cpp}> - LLM inference engine written in C and C++
-- [yhirose/cpp-httplib](https://github.com/yhirose/cpp-httplib) - Single-header HTTP server, used by `llama-server` - MIT license
-- [nothings/stb](https://github.com/nothings/stb) - Single-header image format decoder, used by multimodal subsystem - Public domain
-- [nlohmann/json](https://github.com/nlohmann/json) - Single-header JSON library, used by various tools/examples - MIT License
-- [mackron/miniaudio](https://github.com/mackron/miniaudio) - Single-header audio format decoder, used by multimodal subsystem - Public domain
-- [sheredom/subprocess.h](https://github.com/sheredom/subprocess.h) - Single-header process launching solution for C and C++ - Public domain
+*Thank you, Ma'am!*
