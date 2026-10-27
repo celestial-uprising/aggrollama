@@ -17,10 +17,10 @@
    - *BEELLAMA* initial compilation successful
    - *IK_LLAMA* failing compilation tests
 
-   - *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
+   *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
 
 
-   - **Est.** update/transition period for both repos: *10/22 - 10/29*
+   **Est.** update/transition period for both repos: *10/22 - 10/29*
 ### AggroLlama
 
 The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
