@@ -1,13 +1,18 @@
 # Good News, Everyone!
 
+  *Scripts have been further optimized!*
+
   *The rabbits have returned!!!*
 
   Benchmark result coming soon
-    - early testing shows +19% token generation with CUDA (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
+    - early testing shows +19% token generation & +10% prompt processing *CUDA*
+  (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
 
   This repo is considered a 'skunk-works' style development & testing trunk, while *Bartledan* [https://github.com/celestial-uprising/bartledan] will be the release branch. Detailed instructions, Containerfiles, the AOCC tarball fragments, and all verified build scripts for both AOCC & Clang. Soon, pre-built *batteries-included* container images will be available via **ghcr.io**.
 
   In addition to standard **llama.cpp** source, testing will also be performed against **ik_llama** and **beellama** sources
+    - *BEELLAMA* initial compilation successful
+    - *IK_LLAMA* failing compilation tests
 
   *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
 
@@ -23,13 +28,13 @@ The Llama you love; built with aggression rarely seen in polite society, but oft
 
 Build + Testing: **PASSING** 
 
-  - *VULKAN* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+  - *VULKAN* --- AOCC, OpenBLAS, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
 
-  - *CUDA* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+  - *CUDA* --- AOCC, OpenBLAS, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
 
 Build: **PASSING** + Testing: **FAILING** 
 
-  - *ROCm* --- AOCC, Mimalloc, LTO, $AGGRO Optimizations (OpenMP to be added as soon as ROCm testing is resumed)
+  - *ROCm* --- AOCC, Mimalloc, LTO, $AGGRO Optimizations (OpenBLAS & OpenMP, to be added as soon as ROCm testing is resumed)
 
 Build: **FAILING** + Testing: *N/A* 
 
