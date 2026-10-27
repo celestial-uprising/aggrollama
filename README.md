@@ -6,7 +6,7 @@
 
   Benchmark result coming soon
 
-    - early testing shows +19% token generation & +10% prompt processing *CUDA*
+   - early testing shows +19% token generation & +10% prompt processing *CUDA*
 
   (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
 
@@ -14,13 +14,13 @@
 
   In addition to standard **llama.cpp** source, testing will also be performed against **ik_llama** and **beellama** sources
 
-    - *BEELLAMA* initial compilation successful
-    - *IK_LLAMA* failing compilation tests
+   - *BEELLAMA* initial compilation successful
+   - *IK_LLAMA* failing compilation tests
 
-    *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
+   - *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
 
 
-    **Est.** update/transition period for both repos: *10/22 - 10/29*
+   - **Est.** update/transition period for both repos: *10/22 - 10/29*
 ### AggroLlama
 
 The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
