@@ -5,19 +5,22 @@
   *The rabbits have returned!!!*
 
   Benchmark result coming soon
+
     - early testing shows +19% token generation & +10% prompt processing *CUDA*
+
   (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
 
   This repo is considered a 'skunk-works' style development & testing trunk, while *Bartledan* [https://github.com/celestial-uprising/bartledan] will be the release branch. Detailed instructions, Containerfiles, the AOCC tarball fragments, and all verified build scripts for both AOCC & Clang. Soon, pre-built *batteries-included* container images will be available via **ghcr.io**.
 
   In addition to standard **llama.cpp** source, testing will also be performed against **ik_llama** and **beellama** sources
+
     - *BEELLAMA* initial compilation successful
     - *IK_LLAMA* failing compilation tests
 
-  *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
+    *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
 
 
-  **Est.** update/transition period for both repos: *10/22 - 10/29*
+    **Est.** update/transition period for both repos: *10/22 - 10/29*
 ### AggroLlama
 
 The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
