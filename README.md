@@ -6,7 +6,7 @@
 
   Benchmark result coming soon
 
-   - early testing shows +19% token generation & +10% prompt processing *CUDA*
+   - early testing shows +19% token generation & +23% prompt processing *CUDA*
 
   (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
 
