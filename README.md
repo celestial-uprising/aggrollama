@@ -1,10 +1,8 @@
 # Good News, Everyone!
 
-  *Scripts have been further optimized!*
+  *Testing on Whisper.cpp has begun*
 
-  *The rabbits have returned!!!*
-
-  Benchmark result coming soon
+  *AggroLlama Benchmarks Coming Soon!!!*
 
    - early testing shows +19% token generation & +23% prompt processing *CUDA*
 
@@ -17,13 +15,11 @@
    - *BEELLAMA* initial compilation successful
    - *IK_LLAMA* failing compilation tests
 
-   *AOCL-BLAS* is scheduled to be tested (and added to the repo and Containerfiles) in the next few days
-
+   *AOCL-BLAS is scheduled to be tested before long,..*
 
    **Est.** update/transition period for both repos: *10/22 - 10/29*
-### AggroLlama
 
-The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
+### The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
 
 </div>
 
@@ -51,9 +47,9 @@ $AGGRO Optimizations: *-march=znver3 -O3 -Ofast -flto=full -zopt -fno-finite-mat
 
 </div>
 
-#### Tools
+### Tools & Usage
 
-All identical to the original. (Just with a bit more spice!)
+All identical to the originals. (Just with a bit more spice!)
 
 </div>
 
