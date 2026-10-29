@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+echo "===  {START} COMPLETE LLAMA BUILD - ADA  ==="
+
+echo "===  {START} CUDA MAX ==="
+set -e
+export AGGRO="-march=znver3 -O3 -Ofast -flto=full -zopt -fno-finite-math-only -fno-semantic-interposition -falign-functions=32 -fvectorize -mprefer-vector-width=256 -fomit-frame-pointer -fstrict-aliasing -Wno-pass-failed -mllvm -enable-strided-vectorization"
+export OMP_PROC_BIND=spread
+export OMP_WAIT_POLICY=active
+cd "$HOME/ada/llama-cuda/"
+rm -rf build
+git fetch --all
+git fetch --tags --all
+git reset --hard origin/master || git reset --hard
+git pull
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER="clang" \
+  -DCMAKE_CXX_COMPILER="clang++" \
+  -DCMAKE_C_FLAGS="$AGGRO" \
+  -DCMAKE_CXX_FLAGS="$AGGRO" \
+  -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+  -DGGML_NATIVE=ON \
+  -DGGML_LTO=ON \
+  -DCMAKE_EXE_LINKER_FLAGS="-flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc)" \
+  -DGGML_MIMALLOC=ON \
+  -DCMAKE_INSTALL_RPATH="\$ORIGIN" \
+  -DGGML_BACKEND_DL=OFF \
+  -DGGML_CUDA=ON \
+  -DCMAKE_CUDA_ARCHITECTURES="60-real;86-real" \
+  -DGGML_CUDA_FA_QUANTS="all" \
+  -DGGML_CUDA_FORCE_MMQ=ON \
+  -DGGML_BLAS=ON \
+  -DGGML_BLAS_VENDOR=OpenBLAS \
+  -DGGML_OPENMP=ON
+ninja -C build
+echo "===  {END} CUDA MAX ==="
+
+echo "===  {START} Vulkan MAX ==="
+cd "$HOME/ada/llama-vulkan/"
+rm -rf build
+git fetch --all
+git fetch --tags --all
+git reset --hard origin/master || git reset --hard
+git pull
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER="clang" \
+  -DCMAKE_CXX_COMPILER="clang++" \
+  -DCMAKE_C_FLAGS="$AGGRO" \
+  -DCMAKE_CXX_FLAGS="$AGGRO" \
+  -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+  -DGGML_NATIVE=ON \
+  -DGGML_LTO=ON \
+  -DCMAKE_EXE_LINKER_FLAGS="-flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc)" \
+  -DGGML_MIMALLOC=ON \
+  -DCMAKE_INSTALL_RPATH="\$ORIGIN" \
+  -DGGML_BACKEND_DL=OFF \
+  -DGGML_VULKAN=ON \
+  -DGGML_BLAS=ON \
+  -DGGML_BLAS_VENDOR=OpenBLAS \
+  -DGGML_OPENMP=ON
+ninja -C build
+echo "===  {START} Vulkan MAX ==="
+
+echo "===  {START} CUDA PLUS ==="
+cd "$HOME/ada/llama-cuda-plus/"
+rm -rf build
+git fetch --all
+git fetch --tags --all
+git reset --hard origin/master || git reset --hard
+git pull
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER="clang" \
+  -DCMAKE_CXX_COMPILER="clang++" \
+  -DCMAKE_C_FLAGS="$AGGRO" \
+  -DCMAKE_CXX_FLAGS="$AGGRO" \
+  -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+  -DGGML_NATIVE=ON \
+  -DGGML_LTO=ON \
+  -DCMAKE_EXE_LINKER_FLAGS="-O3 -lmimalloc -flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc),--allow-multiple-definition" \
+  -DCMAKE_SHARED_LINKER_FLAGS="-O3 -lmimalloc -flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc),--allow-multiple-definition" \
+  -DCMAKE_MODULE_LINKER_FLAGS="-O3 -lmimalloc -flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc),--allow-multiple-definition" \
+  -DGGML_MIMALLOC=ON \
+  -DCMAKE_INSTALL_RPATH="\$ORIGIN" \
+  -DGGML_BACKEND_DL=OFF \
+  -DGGML_CUDA=ON \
+  -DCMAKE_CUDA_ARCHITECTURES="60-real;86-real" \
+  -DGGML_CUDA_FA_QUANTS="all" \
+  -DGGML_CUDA_FORCE_MMQ=ON \
+  -DGGML_BLAS=ON \
+  -DGGML_BLAS_VENDOR=OpenBLAS \
+  -DGGML_OPENMP=ON
+ninja -C build
+echo "===  {END} CUDA PLUS ==="
+
+echo "===  {START} Vulkan PLUS ==="
+cd "$HOME/ada/llama-vulkan-plus/"
+rm -rf build
+git fetch --all
+git fetch --tags --all
+git reset --hard origin/master || git reset --hard
+git pull
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER="clang" \
+  -DCMAKE_CXX_COMPILER="clang++" \
+  -DCMAKE_C_FLAGS="$AGGRO" \
+  -DCMAKE_CXX_FLAGS="$AGGRO" \
+  -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+  -DGGML_NATIVE=ON \
+  -DGGML_LTO=ON \
+  -DCMAKE_EXE_LINKER_FLAGS="-O3 -lmimalloc -flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc),--allow-multiple-definition" \
+  -DCMAKE_SHARED_LINKER_FLAGS="-O3 -lmimalloc -flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc),--allow-multiple-definition" \
+  -DCMAKE_MODULE_LINKER_FLAGS="-O3 -lmimalloc -flto=full -fuse-ld=lld -Wl,-mllvm,-threads=$(nproc),--allow-multiple-definition" \
+  -DGGML_MIMALLOC=ON \
+  -DCMAKE_INSTALL_RPATH="\$ORIGIN" \
+  -DGGML_BACKEND_DL=OFF \
+  -DGGML_VULKAN=ON \
+  -DGGML_BLAS=ON \
+  -DGGML_BLAS_VENDOR=OpenBLAS \
+  -DGGML_OPENMP=ON
+ninja -C build
+echo "===  {END} Vulkan PLUS ==="
+
+echo "===  {END} COMPLETE LLAMA BUILD - ADA  ==="
