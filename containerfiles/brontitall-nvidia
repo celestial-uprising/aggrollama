@@ -1,0 +1,33 @@
+FROM fedora:43
+
+LABEL com.github.containers.toolbox="true" \
+      com.github.debarshiray.toolbox="true" \
+      org.opencontainers.image.title="brontitall-nvidia" \
+      org.opencontainers.image.description="A distrobox & toolbox image for building and running llama.cpp (cpu/nvidia/openblas/openmp/lto) with the AOCC compiler from AMD (for Zen processor based systems)"
+
+RUN dnf -y update && dnf -y install \
+    git curl wget gcc gcc-c++ gcc-gfortran cmake ninja-build make pkgconf \
+    lld libomp libomp-devel glibc-devel libstdc++-devel openssl-devel vim \
+    vulkan-loader vulkan-loader-devel vulkan-headers vulkan-tools glslc \
+    openblas openblas-devel mimalloc mimalloc-devel spirv-headers-devel \
+    ccache \
+    && dnf clean all
+
+RUN dnf config-manager addrepo --from-repofile=https://developer.download.nvidia.com/compute/cuda/repos/fedora43/$(uname -m)/cuda-fedora43.repo && \
+    dnf clean all && \
+    dnf config-manager setopt cuda-fedora43-$(uname -m).exclude=nvidia-driver,nvidia-modprobe,nvidia-persistenced,nvidia-settings,nvidia-libXNVCtrl,nvidia-xconfig && \
+    dnf -y install cuda-toolkit
+
+COPY aocc_part_* /tmp/
+
+RUN cat /tmp/aocc_part_* > /tmp/aocc-compiler-5.2.0-1.x86_64.rpm
+
+RUN rpm -ivh --nodigest --nosignature /tmp/aocc-compiler-5.2.0-1.x86_64.rpm && \
+    rm -f /tmp/aocc_part_* /tmp/aocc-compiler-5.2.0-1.x86_64.rpm
+
+ENV PATH="${PATH}:/usr/local/cuda/bin"
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/cuda/lib64"
+ENV PATH="/opt/AMD/aocc-compiler-5.2.0/bin:${PATH}"
+ENV LD_LIBRARY_PATH="/opt/AMD/aocc-compiler-5.2.0/lib:${LD_LIBRARY_PATH}"
+ENV LANG=en_US.UTF-8
+RUN echo "source /opt/AMD/aocc-compiler-5.2.0/setenv_AOCC.sh" >> /etc/bashrc

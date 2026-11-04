@@ -1,0 +1,21 @@
+FROM fedora:44
+
+LABEL com.github.containers.toolbox="true" \
+      com.github.debarshiray.toolbox="true" \
+      org.opencontainers.image.title="bartledan-nvidia" \
+      org.opencontainers.image.description="A distrobox & toolbox image for building and running llama.cpp (cpu/nvidia/openblas/openmp/lto) with Clang"
+
+RUN dnf -y update && dnf -y install \
+    git curl wget gcc gcc-c++ gcc-gfortran cmake ninja-build make pkgconf \
+    lld libomp libomp-devel glibc-devel libstdc++-devel openssl-devel vim \
+    vulkan-loader vulkan-loader-devel vulkan-headers vulkan-tools glslc \
+    openblas openblas-devel mimalloc mimalloc-devel spirv-headers-devel \
+    ccache llvm llvm-devel clang clang-devel \
+    && dnf clean all
+
+RUN dnf config-manager addrepo --from-repofile=https://developer.download.nvidia.com/compute/cuda/repos/fedora44/$(uname -m)/cuda-fedora44.repo && \
+    dnf clean all && \
+    dnf config-manager setopt cuda-fedora44-$(uname -m).exclude=nvidia-driver,nvidia-modprobe,nvidia-persistenced,nvidia-settings,nvidia-libXNVCtrl,nvidia-xconfig && \
+    dnf -y install cuda-toolkit
+
+ENV LANG=en_US.UTF-8

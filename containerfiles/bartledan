@@ -1,0 +1,16 @@
+FROM fedora:rawhide
+
+LABEL com.github.containers.toolbox="true" \
+      com.github.debarshiray.toolbox="true" \
+      org.opencontainers.image.title="bartledan" \
+      org.opencontainers.image.description="A distrobox & toolbox image for building and running llama.cpp (cpu/vulkan/openblas/openmp/lto) with Clang"
+
+RUN dnf -y update && dnf -y install \
+    git curl wget gcc gcc-c++ gcc-gfortran cmake ninja-build make pkgconf \
+    lld libomp libomp-devel glibc-devel libstdc++-devel openssl-devel vim \
+    vulkan-loader vulkan-loader-devel vulkan-headers vulkan-tools glslc \
+    openblas openblas-devel mimalloc mimalloc-devel spirv-headers-devel \
+    ccache llvm llvm-devel clang clang-devel \
+    && dnf clean all
+
+ENV LANG=en_US.UTF-8

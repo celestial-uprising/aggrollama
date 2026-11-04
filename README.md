@@ -1,6 +1,8 @@
 # Good News, Everyone!
 
-  *Testing on Whisper.cpp has begun*
+  *Contianerfiles added to repo! build with podman to run yourself--- will be added to ghcr.io soon*
+
+  *Whisper.cpp scripts successful!!!*
 
   *AggroLlama Benchmarks Coming Soon!!!*
 
