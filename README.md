@@ -1,25 +1,16 @@
 # Good News, Everyone!
 
-  *Contianerfiles added to repo! build with podman to run yourself--- will be added to ghcr.io soon*
-
   *Whisper.cpp scripts successful!!!*
 
   *AggroLlama Benchmarks Coming Soon!!!*
 
-   - early testing shows +19% token generation & +23% prompt processing *CUDA*
+   - testing shows solid +19% token generation & +23% prompt processing *CUDA*
 
   (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
 
-  This repo is considered a 'skunk-works' style development & testing trunk, while *Bartledan* [https://github.com/celestial-uprising/bartledan] will be the release branch. Detailed instructions, Containerfiles, the AOCC tarball fragments, and all verified build scripts for both AOCC & Clang. Soon, pre-built *batteries-included* container images will be available via **ghcr.io**.
-
-  In addition to standard **llama.cpp** source, testing will also be performed against **ik_llama** and **beellama** sources
-
-   - *BEELLAMA* initial compilation successful
-   - *IK_LLAMA* failing compilation tests
+  [*Brontitall*](https://github.com/celestial-uprising/brontitall) is now pushing signed, pre-built *batteries-included* container images *ghcr.io* for building AggroLlama and AggroWhisper youself more easily,...
 
    *AOCL-BLAS is scheduled to be tested before long,..*
-
-   **Est.** update/transition period for both repos: *10/22 - 10/29*
 
 ### The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
 
@@ -35,9 +26,13 @@ Build + Testing: **PASSING**
 
 Build: **PASSING** + Testing: **FAILING** 
 
+  - *BEELLAMA* initial compilation successful
+  
   - *ROCm* --- AOCC, Mimalloc, LTO, $AGGRO Optimizations (OpenBLAS & OpenMP, to be added as soon as ROCm testing is resumed)
 
 Build: **FAILING** + Testing: *N/A* 
+
+  - *IK_LLAMA* failing compilation tests
 
   - *ZenDNN* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
        *To be built against: CUDA, Vulkan & ROCm*
