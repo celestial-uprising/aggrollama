@@ -1,4 +1,58 @@
-# Good News, Everyone!
+## *The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials*
+
+### *Usage*
+
+Distrobox compatible container images; for building AggroLlama & AggroWhisper with Clang or AOCC (*AMD's Optimized C Compiler*).
+
+<details>
+    <summary>**AOCC Infused Container Images**</summary>
+
+    - *Vulkan* -- (*about 2.04GiB*)
+    ```
+    IMAGE="ghcr.io/celestial-uprising/brontitall:latest"
+
+    distrobox create -n brontitall -i ${IMAGE}
+
+    distrobox enter brontitall 
+    ```
+
+    - *CUDA* -- (*about 10.4GiB*)
+    ```
+    IMAGE="ghcr.io/celestial-uprising/brequinda:latest"
+
+    distrobox create --nvidia -n brequinda -i ${IMAGE}
+
+    distrobox enter brequinda
+    ```
+</details>
+
+<details>
+    <summary>**Clang Infused Container Images**</summary>
+
+    - *Vulkan* -- (*about *)
+    ```
+    IMAGE="ghcr.io/celestial-uprising/bartledan:latest"
+
+    distrobox create -n bartledan -i ${IMAGE}
+
+    distrobox enter bartledan
+    ```
+
+    - *CUDA* -- (*about *)
+    ```
+    IMAGE="ghcr.io/celestial-uprising/bethselamin:latest"
+
+    distrobox create --nvidia -n bethselamin -i ${IMAGE}
+
+    distrobox enter bethselamin
+    ```
+</details>
+
+### *Tools*
+
+All identical to the originals. (Just with a bit more spice!)
+
+</div>
 
   *Whisper.cpp scripts successful!!!*
 
@@ -7,8 +61,6 @@
    - testing shows solid +19% token generation & +23% prompt processing *CUDA*
 
   (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
-
-  [*Brontitall*](https://github.com/celestial-uprising/brontitall) is now pushing signed, pre-built *batteries-included* container images *ghcr.io* for building AggroLlama and AggroWhisper youself more easily,...
 
    *AOCL-BLAS is scheduled to be tested before long,..*
 
@@ -43,11 +95,6 @@ $AGGRO Optimizations: *-march=znver3 -O3 -Ofast -flto=full -zopt -fno-finite-mat
                       *-Wno-pass-failed -mllvm -enable-strided-vectorization*
 
 </div>
-
-### Tools & Usage
-
-All identical to the originals. (Just with a bit more spice!)
-
 </div>
 
 
