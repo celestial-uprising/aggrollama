@@ -32,23 +32,26 @@ Distrobox compatible container images; for building AggroLlama & AggroWhisper wi
 <details>
     <summary>Clang Container Images</summary>
 
-    - Vulkan -- (about )
-    ```
+    ----------------------------------------------------
+    #---Vulkan---(about 2.24GiB)------------------------
+    ----------------------------------------------------
+
     IMAGE="ghcr.io/celestial-uprising/bartledan:latest"
 
     distrobox create -n bartledan -i ${IMAGE}
 
     distrobox enter bartledan
-    ```
 
-    - *CUDA* -- (*about *)
-    ```
+    ----------------------------------------------------
+    #---CUDA-----(about 10.8GiB)------------------------
+    ----------------------------------------------------
+    
     IMAGE="ghcr.io/celestial-uprising/bethselamin:latest"
 
     distrobox create --nvidia -n bethselamin -i ${IMAGE}
 
     distrobox enter bethselamin
-    ```
+
 </details>
 
 ### *Tools*
@@ -59,17 +62,11 @@ All identical to the originals. (Just with a bit more spice!)
 
   *Whisper.cpp scripts successful!!!*
 
-  *AggroLlama Benchmarks Coming Soon!!!*
+  *Benchmarks Coming Soon!!!*
 
    - testing shows solid +19% token generation & +23% prompt processing *CUDA*
 
-  (complete test results for multiple models/builds/systems will live within their own *Benchmarks* wiki...)
-
    *AOCL-BLAS is scheduled to be tested before long,..*
-
-### The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials.
-
-</div>
 
 #### Backends & Optimizations
 
@@ -92,16 +89,7 @@ Build: **FAILING** + Testing: *N/A*
   - *ZenDNN* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
        *To be built against: CUDA, Vulkan & ROCm*
 
-$AGGRO Optimizations: *-march=znver3 -O3 -Ofast -flto=full -zopt -fno-finite-math-only* 
-                      *-fno-semantic-interposition -falign-functions=32 -fvectorize*
-                      *-mprefer-vector-width=256 -fomit-frame-pointer -fstrict-aliasing*
-                      *-Wno-pass-failed -mllvm -enable-strided-vectorization*
-
-</div>
-</div>
-
-
-#### Contributing
+#### *Contributing*
 
 It is greatly preferred; out of unabashed preservation of the emotional and spiritual faculties of my last remaining brain cell:  PR's (of actual benefit to Llama.cpp itself) go to the original project; Please and thank you!
 
@@ -109,7 +97,7 @@ Do not, **under any circumstances**, bring issues with the *build scripts* in th
 
 Do feel free to issue PR's with this repo, if they are related to the build process itself, the related Brontiall and Bartledan Containerfiles,.. (really- anything with bits of cabbage left on it). I will do the best a rabbit can do to assist.
 
-### Acknowledgements
+### *Acknowledgements*
 
 To my wife: the love of my life- my savior and queen; who has provided all the carrots, hay, and cabbage a bunny could fit in her shnozz.
 
