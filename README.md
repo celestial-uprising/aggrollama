@@ -5,31 +5,34 @@
 Distrobox compatible container images; for building AggroLlama & AggroWhisper with Clang or AOCC (*AMD's Optimized C Compiler*).
 
 <details>
-    <summary>**AOCC Infused Container Images**</summary>
+    <summary>AOCC Container Images</summary>
 
-    - *Vulkan* -- (*about 2.04GiB*)
-    ```
+    ----------------------------------------------------
+    #---Vulkan---(about 2.04GiB)------------------------
+    ----------------------------------------------------
+
     IMAGE="ghcr.io/celestial-uprising/brontitall:latest"
 
     distrobox create -n brontitall -i ${IMAGE}
-
+    
     distrobox enter brontitall 
-    ```
 
-    - *CUDA* -- (*about 10.4GiB*)
-    ```
+    ----------------------------------------------------
+    #---CUDA-----(about 10.4GiB)------------------------
+    ----------------------------------------------------
+    
     IMAGE="ghcr.io/celestial-uprising/brequinda:latest"
-
+    
     distrobox create --nvidia -n brequinda -i ${IMAGE}
-
+    
     distrobox enter brequinda
-    ```
+
 </details>
 
 <details>
-    <summary>**Clang Infused Container Images**</summary>
+    <summary>Clang Container Images</summary>
 
-    - *Vulkan* -- (*about *)
+    - Vulkan -- (about )
     ```
     IMAGE="ghcr.io/celestial-uprising/bartledan:latest"
 
