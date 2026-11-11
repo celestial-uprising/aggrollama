@@ -1,14 +1,20 @@
 ## *The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials*
 
+*AOCC Version 6 has been successfully added to the respective container images!!!*
+
+  *Brontitall has been pushed from Fedora 43 to Rawhide*
+
+  *Brequinda has been pushed from Fedora 43 to 44*
+
 ### *Usage*
 
-Distrobox compatible container images; for building AggroLlama & AggroWhisper with Clang or AOCC (*AMD's Optimized C Compiler*).
+Distrobox compatible container images; for building AggroLlama & AggroWhisper with Clang or AOCC v6 (*AMD's Optimized C Compiler*).
 
 <details>
     <summary>AOCC Container Images</summary>
 
     ----------------------------------------------------
-    #---Vulkan---(about 2.04GiB)------------------------
+    #---Vulkan---(about 3.02GiB)------------------------
     ----------------------------------------------------
 
     IMAGE="ghcr.io/celestial-uprising/brontitall:latest"
@@ -18,7 +24,7 @@ Distrobox compatible container images; for building AggroLlama & AggroWhisper wi
     distrobox enter brontitall 
 
     ----------------------------------------------------
-    #---CUDA-----(about 10.4GiB)------------------------
+    #---CUDA-----(about 11.6GiB)------------------------
     ----------------------------------------------------
     
     IMAGE="ghcr.io/celestial-uprising/brequinda:latest"
@@ -72,21 +78,21 @@ All identical to the originals. (Just with a bit more spice!)
 
 Build + Testing: **PASSING** 
 
-  - *VULKAN* --- AOCC, OpenBLAS, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+  - *VULKAN* --- AOCCv6, OpenBLAS, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
 
-  - *CUDA* --- AOCC, OpenBLAS, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+  - *CUDA* --- AOCCv6, OpenBLAS, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
 
 Build: **PASSING** + Testing: **FAILING** 
 
   - *BEELLAMA* initial compilation successful
   
-  - *ROCm* --- AOCC, Mimalloc, LTO, $AGGRO Optimizations (OpenBLAS & OpenMP, to be added as soon as ROCm testing is resumed)
+  - *ROCm* --- AOCCv6, Mimalloc, LTO, $AGGRO Optimizations (OpenBLAS & OpenMP, to be added as soon as ROCm testing is resumed)
 
 Build: **FAILING** + Testing: *N/A* 
 
   - *IK_LLAMA* failing compilation tests
 
-  - *ZenDNN* --- AOCC, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
+  - *ZenDNN* --- AOCCv6, OpenMP, Mimalloc, LTO, $AGGRO Optimizations
        *To be built against: CUDA, Vulkan & ROCm*
 
 #### *Contributing*
