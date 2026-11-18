@@ -1,10 +1,7 @@
 ## *The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials*
 
-*AOCC Version 6 has been successfully added to the respective container images!!!*
+*AOCC Version 6 has been successfully added to the build scripts!!!*
 
-  *Brontitall has been pushed from Fedora 43 to Rawhide*
-
-  *Brequinda has been pushed from Fedora 43 to 44*
 
 ### *Usage*
 
