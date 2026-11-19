@@ -3,6 +3,7 @@
 *New AOCC v6 & ZenDNN build scripts incoming!!!*
 
 *The CharismaticLlama script used all 64GiB of my build server's system RAM and dipped into ZRAM by a little less than 500 MiB & took at least 95  min to actually build* 
+**REBUILDING WITH CCACHE ONLY TAKES 10-15 min (on ADA)**
 
 ### *Usage*
 
