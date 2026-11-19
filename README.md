@@ -1,6 +1,8 @@
 ## *The Llama you love; built with aggression rarely seen in polite society, but often present in the dreams of closeted, authoritarian government officials*
 
-*New AOCC v6 & ZenDNN build scripts incoming SOON!!!*
+*New AOCC v6 & ZenDNN build scripts incoming!!!*
+
+*The CharismaticLlama script used all 64GiB of my build server's system RAM and dipped into ZRAM by a little less than 500 MiB & took at least 95  min to actually build* 
 
 ### *Usage*
 
